@@ -3,6 +3,7 @@ body{
    
         font-family: 'Shadows Into Light', cursive;
         letter-spacing: 3px;
+       
 }
 .navbar-brand {
     color: #ef476f;
@@ -32,11 +33,11 @@ input,select{
     padding-top: 30px;
     padding-bottom: 30px;
     border-radius: 30px;
-    width: 80%;
+    width: 100%;
     box-shadow: 5px 5px 5px black;   
 }
 #submitbutton, #verifybutton{
-    width: 20%;
+    width: 50%;
     background-color: #4a4e69;
     color: white;
     letter-spacing: 2px;
@@ -56,7 +57,7 @@ label{
    
     width: 100%;
     font-size: 20px;
-    display: table-row;/*00745741089 customer id-D2H*/
+    display: table-row;
     height:40px;
   border-spacing: 10px;
    
@@ -66,7 +67,6 @@ label{
     padding-right: 10px;
     padding-left: 20px;
     display: table-cell;
-    
     
     text-align: left;
 }
@@ -82,7 +82,7 @@ label{
 }
 .list_of_rows{
     display:table;
-    width: 50%;
+    width: 100%;
     margin-top: 30px;
     
 }

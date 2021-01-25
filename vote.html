@@ -27,10 +27,11 @@
 
   <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
   <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+ <div class="container">
   <center>
+    <p style="text-align: center; font-size: 20px;" id="votingstatus"></p>
     <div class="list_of_rows">
-      <p class="row1" id="votingstatus"></p>
-      <p class="row1"> <span class="rowbox1"> Aadhar Number: </span> <span id="uid" class="rowbox2"> </span></p>
+        <p class="row1"> <span class="rowbox1"> Aadhar Number: </span> <span id="uid" class="rowbox2"> </span></p>
       <br>
       <p class="row1"> <span class="rowbox1"> Name: </span> <span id="vname" class="rowbox2"> </span></p>
       <br>
@@ -39,12 +40,12 @@
 
     <br>
 
-    <form class="box" style="width: 50%;" id="voter_form" onsubmit="submit()">
+    <form class="box" style="width: auto;" id="voter_form" onsubmit="submit()">
       <div class="form-group row ">
 
         <p>Please select the party you want to Vote:</p>
         <center>
-          <div style="text-align: left; width: 30%;">
+          <div style="text-align: left; width: 50%;">
             <input type="radio" id="INA" name="party_name" value="INA" required>
             <label for="INA">INA - <span id="INA_cname"> </span> </label> <br>
             <input type="radio" id="BJS" name="party_name" value="BJS" required>
@@ -58,6 +59,7 @@
       </div>
     </form>
   </center>
+  </div>
   <script>
     var firebaseConfig = {
       apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
@@ -71,27 +73,27 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    firebase.database().ref("/Admin").on('value', function (snapshot) {
+firebase.database().ref("/Admin").on('value', function (snapshot) {
 
-snapshot.forEach(function (childSnapshot) {
-  childKey = childSnapshot.key;
-  childData = childSnapshot.val();
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
 
-  console.log(childData);
-  if (childKey == "votingstatus") {
-    
-    //Start code
-    if (childData == "started") {
-     document.getElementById("votingstatus").innerHTML="Voting has started";
-    }
-    else {
-      document.getElementById("votingstatus").innerHTML="Voting has stopped";
-    }
-    //End code
-  }
+        console.log(childData);
+        if (childKey == "votingstatus") {
+          
+          //Start code
+          if (childData == "started") {
+           document.getElementById("votingstatus").innerHTML="Voting has started";
+          }
+          else {
+            document.getElementById("votingstatus").innerHTML="Voting has stopped";
+          }
+          //End code
+        }
 
-});
-});
+      });
+    });
     function gohome() {
       window.location = "vote-home.html";
     }

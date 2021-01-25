@@ -61,8 +61,9 @@
         </tr>
       </table>
     </div>
-    <div class="list_of_rows col-sm-4 col-xs-12">
-      <p class="row1"> <span class="rowbox1"> Party</span> <span class="rowbox2">
+
+    <div class="col-sm-6 col-xs-12">
+      <p class="list_of_rows" > <span class="rowbox1"> Party</span> <span class="rowbox2">
           <select class="form-control" name="party" id="party" oninput="getresultpwise()">
             <option value="" disabled selected>select your option</option>
             <option value="INA">INA</option>
@@ -71,9 +72,21 @@
           </select>
         </span></p>
 
-    </div>
-    <div class="list_of_rows col-sm-4 col-xs-12">
-      <p class="row1"> <span class="rowbox1"> Constituency </span> <span class="rowbox2">
+        <div class="div_tables">
+          <table class="alltables" id="pwise">
+            <tr>
+              <th> Constituency - Candidate Name</th>
+              <th> Votes</th>
+              <th> Outcome</th>
+            </tr>
+    
+          </table>
+        </div>
+</div>
+
+    
+    <div class="col-sm-6 col-xs-12">
+      <p class="list_of_rows"> <span class="rowbox1"> Constituency </span> <span class="rowbox2">
           <select class="form-control" name="constituency" id="constituency" oninput="getresultcwise()">
             <option value="" disabled selected>select your option</option>
             <option value="Bangalore">Bangalore</option>
@@ -88,49 +101,42 @@
             <option value="Udupi-Chikkamagaluru">Udupi Chikkamagaluru</option>
           </select>
         </span> </p>
+
+        <div class="div_tables" id="cwise">
+          <table class="alltables">
+            <tr>
+              <th>Party</th>
+              <th>Candidate Name</th>
+              <th>Votes</th>
+              <th>Outcome</th>
+            </tr>
+            <tr>
+              <td>INA</td>
+              <td id="INA_cname"></td>
+              <td id="INA_votes"></td>
+              <td id="INA_outcome"></td>
+            </tr>
+            <tr>
+              <td>BJS</td>
+              <td id="BJS_cname"></td>
+              <td id="BJS_votes"></td>
+              <td id="BJS_outcome"></td>
+            </tr>
+            <tr>
+              <td>JDK</td>
+              <td id="JDK_cname"></td>
+              <td id="JDK_votes"></td>
+              <td id="JDK_outcome"></td>
+            </tr>
+          </table>
+        </div>
     </div>
 
 
-    <div class="div_tables col-sm-6 col-xs-12">
-      <table class="alltables" id="pwise">
-        <tr>
-          <th> Constituency - Candidate Name</th>
-          <th> Votes</th>
-          <th> Outcome</th>
-        </tr>
-
-      </table>
-    </div>
+   
 
 
-    <div class="div_tables col-sm-6 col-xs-12" id="cwise">
-      <table class="alltables">
-        <tr>
-          <th>Party</th>
-          <th>Candidate Name</th>
-          <th>Votes</th>
-          <th>Outcome</th>
-        </tr>
-        <tr>
-          <td>INA</td>
-          <td id="INA_cname"></td>
-          <td id="INA_votes"></td>
-          <td id="INA_outcome"></td>
-        </tr>
-        <tr>
-          <td>BJS</td>
-          <td id="BJS_cname"></td>
-          <td id="BJS_votes"></td>
-          <td id="BJS_outcome"></td>
-        </tr>
-        <tr>
-          <td>JDK</td>
-          <td id="JDK_cname"></td>
-          <td id="JDK_votes"></td>
-          <td id="JDK_outcome"></td>
-        </tr>
-      </table>
-    </div>
+    
   </center>
   <script>
     var firebaseConfig = {
