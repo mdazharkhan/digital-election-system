@@ -23,26 +23,26 @@
 </head>
 
 <body>
-  
 
- <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+
+  <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
   <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
 
   <center>
     <p class="row1">Date/Time: <span id="datetime"></span></p>
-  <div class="list_of_rows"></div>
-  <p class="row1" id="votingstatus"></p>
-  <p class="row1"><a href="vote.html">Vote</a></p>
-        <br>
-        <p class="row1"><a href="v_partydetails.html">Party Details</a></p>
-        <br>
-        <p class="row1"><a href="voter_result.html">Results</a></p>
-        <br>
-        <p class="row1"><a href="change_pass.html">Change Password</a></p>
-  </div>
-</center>
-<script>
-var firebaseConfig = {
+    <div class="list_of_rows"></div>
+    <p class="row1" id="votingstatus"></p>
+    <p class="row1"><a href="vote.html">Vote</a></p>
+    <br>
+    <p class="row1"><a href="v_partydetails.html">Party Details</a></p>
+    <br>
+    <p class="row1"><a onclick="gotoresult()">Results</a></p>
+    <br>
+    <p class="row1"><a href="change_pass.html">Change Password</a></p>
+    </div>
+  </center>
+  <script>
+    var firebaseConfig = {
       apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
       authDomain: "digital-election-system.firebaseapp.com",
       databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
@@ -54,7 +54,7 @@ var firebaseConfig = {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 
-    
+
     display_ct();
     function display_c() {
       var refresh = 1000; // Refresh rate in milli seconds
@@ -66,37 +66,50 @@ var firebaseConfig = {
       document.getElementById("datetime").innerHTML = dt.toLocaleString();
       display_c();
     }
+    var votingstatus="";
+    firebase.database().ref("/Admin").on('value', function (snapshot) {
 
-firebase.database().ref("/Admin").on('value', function (snapshot) {
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
 
-snapshot.forEach(function (childSnapshot) {
-  childKey = childSnapshot.key;
-  childData = childSnapshot.val();
+        console.log(childData);
+        if (childKey == "votingstatus") {
 
-  console.log(childData);
-  if (childKey == "votingstatus") {
-    
-    //Start code
-    if (childData == "started") {
-     document.getElementById("votingstatus").innerHTML="Voting has started";
+          //Start code
+          if (childData == "started") {
+            document.getElementById("votingstatus").innerHTML = "Voting has started";
+            votingstatus="started";
+          }
+          else {
+            document.getElementById("votingstatus").innerHTML = "Voting has stopped";
+            votingstatus="stopped";
+          }
+          //End code
+        }
+
+      });
+    });
+
+    function gotoresult(){
+      if(votingstatus=="started"){
+        window.alert("Voting is still going on. Result will be published once the voting is complete.");
+      }
+      if(votingstatus=="stopped"){
+        window.location="voter_result.html";
+      }
     }
-    else {
-      document.getElementById("votingstatus").innerHTML="Voting has stopped";
+
+    function gohome() {
+      window.location = "vote-home.html";
     }
-    //End code
-  }
 
-});
-});
-  function gohome(){
-    window.location="vote-home.html";
-  }
-
-  function logout(){
-    localStorage.removeItem("v_uname");
-    window.location="index.html";
-  }
-</script>
-<script async src="https://drv.tw/inc/wd.js"></script>
+    function logout() {
+      localStorage.removeItem("v_uname");
+      window.location = "index.html";
+    }
+  </script>
+  <script async src="https://drv.tw/inc/wd.js"></script>
 </body>
+
 </html>

@@ -75,7 +75,7 @@
           disabled>Edit Candidate</button>
 
         <div class="col-lg-12 col-md-12 col-xs-12">
-          <button class="btn btn-info btns" id="save" onclick="save_data()" style="width:30%">Save</button>
+          <button class="btn btn-info btns" id="save" onclick="save_data()" style="width:30%" disabled>Save</button>
         </div>
 
 
@@ -131,6 +131,7 @@
 
     function editleader() {
       document.getElementById("p_leader").disabled = false;
+      document.getElementById("save").disabled = false;
       return false;
     }
 
@@ -196,7 +197,6 @@
 
       firebase.database().ref("/Party/" + party + "/constituency").child(constituency).update({
         c_name: c_name,
-        votes: 0
 
       });
 

@@ -42,7 +42,7 @@
         <tr>
           <th>Party Name</th>
           <th>Total Votes</th>
-          <th>Seats leading</th>
+          <th>Seats leading/Won</th>
         </tr>
         <tr>
           <td> INA</td>
@@ -75,7 +75,7 @@
         <div class="div_tables">
           <table class="alltables" id="pwise">
             <tr>
-              <th> Constituency - Candidate Name</th>
+              <th> Constituency -> Candidate Name</th>
               <th> Votes</th>
               <th> Outcome</th>
             </tr>
@@ -292,7 +292,7 @@
           var cell_v = row.insertCell(1);
           var cell_o = row.insertCell(2);
           //Start code
-          cell_c.innerHTML = childKey + " - " + c_data.c_name;
+          cell_c.innerHTML = childKey + " -> " + c_data.c_name;
           cell_v.innerHTML = c_data.votes;
           if (c_data.leading == 1) {
             if (published == true) {
