@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+  <title>Forgot Password</title>
+
+</head>
+
+<body>
+  
+  <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+  <div class="container">
+    <center>
+      <br>
+      <br>
+
+      <form class="box" id="voter_form" onsubmit="submit()">
+        <div class="form-group row ">
+
+
+          <label for="inputnewpassword" class="col-sm-4 col-form-label">Enter New Password</label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="inputnewpassword" placeholder="Enter New Password" required>
+          </div>
+
+          <label for="inputconfirmpassword" class="col-sm-4 col-form-label">Confirm Password</label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="inputconfirmpassword" placeholder="Confirm Password"
+              required>
+          </div>
+
+        </div>
+        <button type="submit" class="btn" form="voter_form" id="submitbutton" value="Submit">Submit</button>
+      </form>
+    </center>
+  </div>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
+      authDomain: "digital-election-system.firebaseapp.com",
+      databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
+      projectId: "digital-election-system",
+      storageBucket: "digital-election-system.appspot.com",
+      messagingSenderId: "1017590704452",
+      appId: "1:1017590704452:web:735fab9a5ceb55b4d24f11"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    username = localStorage.getItem("v_uname");
+    document.getElementById("voter_form").onsubmit = function () { return submit(); };
+    function submit() {
+
+      password = document.getElementById("inputnewpassword").value;
+      confirm_password = document.getElementById("inputconfirmpassword").value;
+      if (password == confirm_password) {
+        firebase.database().ref("/registration").child(username).update({
+          password: password
+        });
+        window.alert("Password Changed");
+        window.location = "vote-home.html";
+        return false;
+      }
+      else {
+        window.alert("Password Did Not Match");
+      }
+    }
+  function gohome(){
+    window.location="admin-home.html";
+  }
+
+  function logout(){
+    localStorage.removeItem("admin_uname");
+    window.location="index.html";
+  }
+</script>
+  <script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+
+</html>

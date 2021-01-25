@@ -1,0 +1,85 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+ 
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+
+  <title>Admin Details</title>
+
+</head>
+
+<body>
+  
+<span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+<center>
+<div class="list_of_rows">
+    <p class="row1"> <span class="rowbox1"> Admin Name: </span> <span id="ad_name" class="rowbox2"> </span></p> 
+    <br>
+    <p class="row1"> <span class="rowbox1"> Aadhar Number: </span> <span id="ad_aadharno" class="rowbox2"> </span></p> 
+    <br>
+    <p class="row1"> <span class="rowbox1"> Phone Number: </span> <span id="ad_phone" class="rowbox2"> </span></p>
+    <br>
+    <p class="row1"> <span class="rowbox1"> Email ID: </span> <span id="ad_email" class="rowbox2"> </span></p>
+
+</div>
+</center>
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
+    authDomain: "digital-election-system.firebaseapp.com",
+    databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
+    projectId: "digital-election-system",
+    storageBucket: "digital-election-system.appspot.com",
+    messagingSenderId: "1017590704452",
+    appId: "1:1017590704452:web:735fab9a5ceb55b4d24f11"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+  var username=localStorage.getItem("admin_uname");
+    
+    firebase.database().ref("Admin").on('value', function (snapshot) {
+        
+        snapshot.forEach(function (childSnapshot) {
+            childKey = childSnapshot.key;
+            childData = childSnapshot.val();
+            if (childKey== username) {
+                
+                admin_data = childData;
+                //Start code
+                document.getElementById("ad_name").innerHTML=admin_data['Name'];
+                document.getElementById("ad_aadharno").innerHTML=admin_data['aadhar_no'];
+                document.getElementById("ad_phone").innerHTML=admin_data['phoneno'];
+                document.getElementById("ad_email").innerHTML=admin_data['emailid'];
+                //End code
+            }
+        });
+    });
+  function gohome(){
+    window.location="admin-home.html";
+  }
+
+  function logout(){
+    localStorage.removeItem("admin_uname");
+    window.location="index.html";
+  }
+</script>
+<script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+</html>

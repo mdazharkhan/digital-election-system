@@ -1,0 +1,144 @@
+body{
+        background-image: linear-gradient(#bdc3c7,  #073b4c);
+   
+        font-family: 'Shadows Into Light', cursive;
+        letter-spacing: 3px;
+}
+.navbar-brand {
+    color: #ef476f;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 30px;
+}
+#menuitems {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 20px;
+   
+}
+#projectname{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    letter-spacing: 3px;
+}
+.row{
+    width: 80%;
+}
+input,select{
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+.box{
+    background-color:rgba(255,255,255,0.5);
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 30px;
+    width: 80%;
+    box-shadow: 5px 5px 5px black;   
+}
+#submitbutton, #verifybutton{
+    width: 20%;
+    background-color: #4a4e69;
+    color: white;
+    letter-spacing: 2px;
+    font-size: 20px;
+}
+label{
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    margin-top: 8px;
+}
+#message{
+    display: none;
+    font-size: 30px;
+    font-weight:bolder;
+}
+.row1{
+   
+    width: 100%;
+    font-size: 20px;
+    display: table-row;/*00745741089 customer id-D2H*/
+    height:40px;
+  border-spacing: 10px;
+   
+}
+.rowbox1,.rowbox2{
+    background-color: white ;
+    padding-right: 10px;
+    padding-left: 20px;
+    display: table-cell;
+    
+    
+    text-align: left;
+}
+.rowbox1{
+    width:30%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.rowbox2{
+    width:70%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.list_of_rows{
+    display:table;
+    width: 50%;
+    margin-top: 30px;
+    
+}
+.row1 a{
+    background-color: white;
+    border-radius: 20px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+#logouticon{
+    float:right;
+    padding-left: 5px;
+}
+.icons{
+    font-size: 50px;
+    margin: 10px;
+    border-radius: 10px;
+    
+}
+.icons:hover{
+    transform: scale(0.9);
+    background-color: bisque;
+}
+#passwordbox{
+    display:none;
+}
+.btns{
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+table, th, td {
+    border-width: 5px;
+    border-style:groove;
+    background-color:#bcabae;
+  }
+  .alltables{
+    margin-top:10px;
+    display: inline-block;
+
+  }
+  #totalresult{
+      
+      margin-right: 10px;
+  }
+  td{
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  th{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #pwise, #cwise{
+      display: none;
+  }
+ button{
+     letter-spacing: 2px;
+ }

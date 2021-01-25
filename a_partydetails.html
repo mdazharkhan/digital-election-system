@@ -1,0 +1,208 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+  <title>Party Details</title>
+
+</head>
+
+<body>
+
+  <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+  <center>
+    <p class="row1" id="votingstatus"></p>
+    <form class="box" id="party_details" onsubmit="submit()">
+      <div class="form-group row">
+
+        <label class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label" for="party">Choose Party:</label>
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+          <select class="form-control" name="party" id="party" oninput="getpartyleader()">
+            <option value="" disabled selected>select your option</option>
+            <option value="INA">INA</option>
+            <option value="BJS">BJS</option>
+            <option value="JDK">JDK</option>
+          </select>
+        </div>
+
+        <label for="p_leader" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label"> Party Leader</label>
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+          <input type="text" class="form-control" id="p_leader" placeholder="Party Leader" disabled>
+        </div>
+        <button class="col-lg-2 col-md-2 col-xs-12 btn btn-info btns" id="editpleader" onclick="return editleader()"
+          disabled>Edit Leader</button>
+
+        <label class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label" for="constituency">Choose
+          Constituency:</label>
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+          <select class="form-control" name="constituency" id="constituency" oninput="getcandidate()" disabled>
+            <option value="" disabled selected>select your option</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Bellary">Bellary</option>
+            <option value="Bijapur">Bijapur</option>
+            <option value="Chamrajnagar">Chamrajnagar</option>
+            <option value="Hassan">Hassan</option>
+            <option value="Mandya">Mandya</option>
+            <option value="Mysore">Mysore</option>
+            <option value="Shimogga">Shimogga</option>
+            <option value="Tumkur">Tumkur</option>
+            <option value="Udupi-Chikkamagaluru">Udupi Chikkamagaluru</option>
+          </select>
+        </div>
+
+        <label for="inputcname" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Candidate Name</label>
+        <div class="ccol-lg-5 col-md-5 col-sm-12 col-xs-12">
+          <input type="text" class="form-control" id="c_name" placeholder="Candidate Name" disabled>
+        </div>
+        <button class="col-lg-2 col-md-2 col-xs-12 btn btn-info btns" id="editcname" onclick="return editcandidate()"
+          disabled>Edit Candidate</button>
+
+        <div class="col-lg-12 col-md-12 col-xs-12">
+          <button class="btn btn-info btns" id="save" onclick="save_data()" style="width:30%">Save</button>
+        </div>
+
+
+
+      </div>
+    </form>
+
+    </div>
+  </center>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
+      authDomain: "digital-election-system.firebaseapp.com",
+      databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
+      projectId: "digital-election-system",
+      storageBucket: "digital-election-system.appspot.com",
+      messagingSenderId: "1017590704452",
+      appId: "1:1017590704452:web:735fab9a5ceb55b4d24f11"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.database().ref("/Admin").on('value', function (snapshot) {
+
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
+
+        console.log(childData);
+        if (childKey == "votingstatus") {
+
+          //Start code
+          if (childData == "started") {
+            document.getElementById("votingstatus").innerHTML = "Voting has started";
+          }
+          else {
+            document.getElementById("votingstatus").innerHTML = "Voting has stopped";
+          }
+          //End code
+        }
+
+      });
+    });
+
+    function gohome() {
+      window.location = "admin-home.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("admin_uname");
+      window.location = "index.html";
+    }
+
+    function editleader() {
+      document.getElementById("p_leader").disabled = false;
+      return false;
+    }
+
+    function editcandidate() {
+      document.getElementById("c_name").disabled = false;
+      return false;
+    }
+
+
+    function getpartyleader() {
+
+      var party = document.getElementById("party").value;
+
+      firebase.database().ref("/Party").on('value', function (snapshot) {
+
+        snapshot.forEach(function (childSnapshot) {
+          childKey = childSnapshot.key;
+          childData = childSnapshot.val();
+          if (childKey == party) {
+
+            party_data = childData;
+            //Start code
+            document.getElementById("p_leader").value = party_data['leader'];
+            //End code
+          }
+        });
+      });
+      getcandidate();
+      document.getElementById("editpleader").disabled = false;
+      document.getElementById("constituency").disabled = false;
+    }
+    function getcandidate() {
+
+      var party = document.getElementById("party").value;
+      var constituency = document.getElementById("constituency").value;
+
+      firebase.database().ref("/Party/" + party + "/constituency").on('value', function (snapshot) {
+
+        snapshot.forEach(function (childSnapshot) {
+          childKey = childSnapshot.key;
+          childData = childSnapshot.val();
+          if (childKey == constituency) {
+
+            c_data = childData;
+            //Start code
+            document.getElementById("c_name").value = c_data['c_name'];
+            //End code
+          }
+        });
+      });
+      document.getElementById("editcname").disabled = false;
+    }
+    function save_data() {
+      var party = document.getElementById("party").value;
+      var constituency = document.getElementById("constituency").value;
+      var p_leader = document.getElementById("p_leader").value;
+      var c_name = document.getElementById("c_name").value;
+
+      firebase.database().ref("/Party").child(party).update({
+        leader: p_leader
+
+      });
+
+      firebase.database().ref("/Party/" + party + "/constituency").child(constituency).update({
+        c_name: c_name,
+        votes: 0
+
+      });
+
+    }
+  </script>
+  <script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+
+</html>

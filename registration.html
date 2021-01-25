@@ -1,0 +1,137 @@
+<html>
+
+<head>
+  <title>Registration</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+ 
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+ 
+
+
+  <link rel="stylesheet" href="style1.css">
+
+  <title>Voter Registration</title>
+
+</head>
+
+<body>
+  <nav class="navbar-inverse" style="position:sticky;top:0;z-index:99999">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Digital Election System</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right" id="menuitems">
+        <li><a href="a_login.html">Admin Login</a></li>
+        <li><a href="#">Voter Registration</a></li>
+        <li><a href="v_login.html">Voter Login</a></li>
+
+      </ul>
+    </div>
+
+  </nav>
+
+
+  <div class="container">
+    <center>
+      <p style="width: 80%; font-size: 30px;">Register to Vote</p>
+
+      <form class="box" id="registration" onsubmit="submit()">
+        <div class="form-group row ">
+          <label for="inputname" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Name</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="text" class="form-control" id="v_name" placeholder="Enter Name" required>
+          </div>
+
+          <label for="inputaadharno" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Aadhar Number</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="number" class="form-control" id="aadharno" placeholder="Aadhar Number" required>
+          </div>
+
+          <label for="inputage" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Age: </label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <select class="form-control" name="age" id="age" required>
+               <option value="" disabled selected>select your option</option>
+              </select> 
+          </div>
+
+          <label for="inputphoneno" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">PhoneNo</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="number" class="form-control" id="phoneno" placeholder="Enter Phone Number" required>
+          </div>
+
+          <label for="inputemailid" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Email </label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="text" class="form-control" id="emailid" placeholder="Enter Email" required>
+          </div>
+
+         
+
+          <label for="inputusername" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Create Username</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="text" class="form-control" id="username" placeholder="Enter Username" required>
+          </div>
+
+          <label for="inputpassword" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Create Password</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="password" class="form-control" id="inputpassword" placeholder="Enter Password" required>
+          </div>
+
+          <label for="inputpassword2" class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label">Confirm Password</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <input type="password" class="form-control" id="inputpassword2" placeholder="Confirm Password" required>
+          </div>
+
+          <label class="col-lg-5 col-md-5 col-sm-12 col-xs-12 col-form-label" for="constituency">Choose Constituency:</label>
+          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+            <select class="form-control" name="constituency" id="constituency" required>
+              <option value="" disabled selected>select your option</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Bellary">Bellary</option>
+              <option value="Bijapur">Bijapur</option>
+              <option value="Chamrajnagar">Chamrajnagar</option>
+              <option value="Hassan">Hassan</option>
+              <option value="Mandya">Mandya</option>
+              <option value="Mysore">Mysore</option>
+              <option value="Shimogga">Shimogga</option>
+              <option value="Tumkur">Tumkur</option>
+              <option value="Udupi-Chikkamagaluru">Udupi Chikkamagaluru</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn" form="registration" id="submitbutton" value="submit">Submit</button>
+        <br>
+        <br>
+        <div class="box" id="message">
+      
+        </div>
+      </form>
+      
+    </center>
+  </div>
+
+  <script src="main_reg.js"></script>
+  <script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+
+</html>

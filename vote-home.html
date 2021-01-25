@@ -1,0 +1,102 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+  <title>VOTE HOME</title>
+
+</head>
+
+<body>
+  
+
+ <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+
+  <center>
+    <p class="row1">Date/Time: <span id="datetime"></span></p>
+  <div class="list_of_rows"></div>
+  <p class="row1" id="votingstatus"></p>
+  <p class="row1"><a href="vote.html">Vote</a></p>
+        <br>
+        <p class="row1"><a href="v_partydetails.html">Party Details</a></p>
+        <br>
+        <p class="row1"><a href="voter_result.html">Results</a></p>
+        <br>
+        <p class="row1"><a href="change_pass.html">Change Password</a></p>
+  </div>
+</center>
+<script>
+var firebaseConfig = {
+      apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
+      authDomain: "digital-election-system.firebaseapp.com",
+      databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
+      projectId: "digital-election-system",
+      storageBucket: "digital-election-system.appspot.com",
+      messagingSenderId: "1017590704452",
+      appId: "1:1017590704452:web:735fab9a5ceb55b4d24f11"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    
+    display_ct();
+    function display_c() {
+      var refresh = 1000; // Refresh rate in milli seconds
+      mytime = setTimeout('display_ct()', refresh);
+    }
+
+    function display_ct() {
+      var dt = new Date();
+      document.getElementById("datetime").innerHTML = dt.toLocaleString();
+      display_c();
+    }
+
+firebase.database().ref("/Admin").on('value', function (snapshot) {
+
+snapshot.forEach(function (childSnapshot) {
+  childKey = childSnapshot.key;
+  childData = childSnapshot.val();
+
+  console.log(childData);
+  if (childKey == "votingstatus") {
+    
+    //Start code
+    if (childData == "started") {
+     document.getElementById("votingstatus").innerHTML="Voting has started";
+    }
+    else {
+      document.getElementById("votingstatus").innerHTML="Voting has stopped";
+    }
+    //End code
+  }
+
+});
+});
+  function gohome(){
+    window.location="vote-home.html";
+  }
+
+  function logout(){
+    localStorage.removeItem("v_uname");
+    window.location="index.html";
+  }
+</script>
+<script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+</html>

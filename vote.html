@@ -1,0 +1,284 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+  <title>VOTE</title>
+
+</head>
+
+<body>
+
+  <span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+  <center>
+    <div class="list_of_rows">
+      <p class="row1" id="votingstatus"></p>
+      <p class="row1"> <span class="rowbox1"> Aadhar Number: </span> <span id="uid" class="rowbox2"> </span></p>
+      <br>
+      <p class="row1"> <span class="rowbox1"> Name: </span> <span id="vname" class="rowbox2"> </span></p>
+      <br>
+      <p class="row1"> <span class="rowbox1"> Constituency: </span> <span id="constituency" class="rowbox2"> </span></p>
+    </div>
+
+    <br>
+
+    <form class="box" style="width: 50%;" id="voter_form" onsubmit="submit()">
+      <div class="form-group row ">
+
+        <p>Please select the party you want to Vote:</p>
+        <center>
+          <div style="text-align: left; width: 30%;">
+            <input type="radio" id="INA" name="party_name" value="INA" required>
+            <label for="INA">INA - <span id="INA_cname"> </span> </label> <br>
+            <input type="radio" id="BJS" name="party_name" value="BJS" required>
+            <label for="BJS">BJS - <span id="BJS_cname"> </span></label><br>
+            <input type="radio" id="JDK" name="party_name" value="JDK" required>
+            <label for="JDK">JDK - <span id="JDK_cname"> </span></label>
+          </div>
+        </center>
+        <br>
+        <button type="submit" class="btn" form="voter_form" id="submitbutton" value="submit">Vote</button>
+      </div>
+    </form>
+  </center>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCwUFJd_w5ttP9uotOncImZWPlE9l118KE",
+      authDomain: "digital-election-system.firebaseapp.com",
+      databaseURL: "https://digital-election-system-default-rtdb.firebaseio.com",
+      projectId: "digital-election-system",
+      storageBucket: "digital-election-system.appspot.com",
+      messagingSenderId: "1017590704452",
+      appId: "1:1017590704452:web:735fab9a5ceb55b4d24f11"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.database().ref("/Admin").on('value', function (snapshot) {
+
+snapshot.forEach(function (childSnapshot) {
+  childKey = childSnapshot.key;
+  childData = childSnapshot.val();
+
+  console.log(childData);
+  if (childKey == "votingstatus") {
+    
+    //Start code
+    if (childData == "started") {
+     document.getElementById("votingstatus").innerHTML="Voting has started";
+    }
+    else {
+      document.getElementById("votingstatus").innerHTML="Voting has stopped";
+    }
+    //End code
+  }
+
+});
+});
+    function gohome() {
+      window.location = "vote-home.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("v_uname");
+      window.location = "index.html";
+    }
+
+
+    var username = localStorage.getItem("v_uname");
+    var constituency = "";
+    var voterstatus = "";
+    var party_votes = new Array(3);
+
+    firebase.database().ref("/Admin").on('value', function (snapshot) {
+
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
+        if (childKey == "votingstatus") {
+          if (childData == "stopped") {
+            document.getElementById("submitbutton").disabled = true;
+            window.alert("Voting has not started yet");
+          }
+          if (childData == "started") {
+            document.getElementById("submitbutton").disabled = false;
+
+          }
+        }
+
+      });
+    });
+
+    firebase.database().ref("/registration").on('value', function (snapshot) {
+
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
+        if (childKey == username) {
+
+          voter_data = childData;
+          //Start code
+          document.getElementById("vname").innerHTML = voter_data['vname'];
+          document.getElementById("uid").innerHTML = voter_data['aadharno'];
+          document.getElementById("constituency").innerHTML = voter_data['constituency'];
+          constituency = voter_data['constituency'];
+          voterstatus = voter_data['voted'];
+          //End code
+        }
+      });
+    });
+
+    firebase.database().ref("/Party").on('value', function (snapshot) {
+
+      snapshot.forEach(function (childSnapshot) {
+        childKey = childSnapshot.key;
+        childData = childSnapshot.val();
+
+
+        party_data = childData["constituency"];
+        //Start code
+
+        document.getElementById(childKey + "_cname").innerHTML = party_data[constituency].c_name;
+
+        party_votes[childKey] = [childKey, childData['votes'], constituency, party_data[constituency].votes];
+
+        //End code
+
+      });
+    });
+    console.log(party_votes);
+
+    document.getElementById("voter_form").onsubmit = function () { return submit() };
+    function submit() {
+      var selectedOption = $("input:radio[name=party_name]:checked").val();
+
+      if (voterstatus == "yes") {
+        window.alert("You have already voted");
+        return false;
+        window.location = "vote-home.html";
+      }
+      else {
+        firebase.database().ref("/registration").child(username).update({
+          voted: "yes"
+        });
+        window.alert("Amazing!! you have successfully voted");
+        window.location = "vote-home.html";
+
+        newpartyvote = party_votes[selectedOption][1] + 1;
+        newc_vote = party_votes[selectedOption][3] + 1;
+        console.log(newpartyvote);
+        console.log(newc_vote);
+        firebase.database().ref("/Party").child(selectedOption).update({
+          votes: newpartyvote
+        });
+        firebase.database().ref("/Party/" + selectedOption + "/constituency").child(constituency).update({
+          votes: newc_vote
+        });
+
+        var prev = 0;
+        var max = [];
+        var maxnum = 0;
+        arr = [];
+        var sum = [];
+        var arrSum = 0;
+        c_item = constituency;
+
+
+        firebase.database().ref("/Party").on('value', function (snapshot) {
+
+          snapshot.forEach(function (childSnapshot) {
+            childKey = childSnapshot.key;
+            childData = childSnapshot.val();
+            c_data = childData['constituency'];
+            //Start code
+            present = c_data[c_item].votes;
+            if (present >= maxnum && present != 0) {
+              maxnum = present;
+            }
+
+          });
+        });
+        console.log("max is", maxnum);
+        firebase.database().ref("/Party").on('value', function (snapshot) {
+
+          snapshot.forEach(function (childSnapshot) {
+            childKey = childSnapshot.key;
+            childData = childSnapshot.val();
+            c_data = childData['constituency'];
+            //Start code
+            present = c_data[c_item].votes;
+            if (present == maxnum && maxnum != 0) {
+              max.push(childKey);
+            }
+
+          });
+        });
+
+
+
+        ["INA", "BJS", "JDK"].forEach(function (item) {
+          if (max.includes(item)) {
+            firebase.database().ref("/Party/" + item + "/constituency").child(c_item).update({
+              leading: 1
+            });
+          }
+          else {
+            firebase.database().ref("/Party/" + item + "/constituency").child(c_item).update({
+              leading: 0
+            });
+          }
+        });
+
+
+
+        ["INA", "BJS", "JDK"].forEach(function (item) {
+          arr[item] = 0;
+          firebase.database().ref("/Party/" + item + "/constituency").on('value', function (snapshot) {
+
+            snapshot.forEach(function (childSnapshot) {
+              childKey = childSnapshot.key;
+              childData = childSnapshot.val();
+
+              //Start code
+
+              if (childData.leading != null) {
+                arr[item] += childData.leading;
+
+              }
+
+
+              console.log(arr);
+
+            });
+
+          });
+          firebase.database().ref("/Party").child(item).update({
+            seats: arr[item]
+          });
+        });
+      }
+      return false;
+    }
+
+  </script>
+  <script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+
+</html>

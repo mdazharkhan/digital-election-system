@@ -1,0 +1,45 @@
+body {
+    background-image: linear-gradient(#bdc3c7,  #073b4c);
+    height: 635px;
+    letter-spacing: 3px;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.navbar-brand {
+    color: #ef476f;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 30px;
+}
+
+.line {
+    height: 2px;
+    width: 100%;
+    background-color: rosybrown;
+}
+
+#menuitems {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 20px;
+   
+}
+
+h2 {
+    color: white;
+    background-color: saddlebrown;
+    padding-left: 20px;
+    margin: 20px;
+}
+
+#myname {
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.group1 {
+    background-color: cyan;
+}
+#projectname{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    letter-spacing: 3px;
+}

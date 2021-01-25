@@ -1,0 +1,59 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Shadows+Into+Light&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style1.css">
+
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+ 
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/live/4.1/firebase.js"></script>
+
+  <title>Pending Registrations</title>
+
+</head>
+
+<body>
+  
+<span class="fa fa-home icons" id="homeicon" onclick="gohome()"></span>
+  <span class="fa fa-sign-out icons" id="logouticon" onclick="logout()"></span>
+<center>
+<div class="list_of_rows">
+    <p class="row1"> <span class="rowbox1"> User name: </span> <span id="uname" class="rowbox2">
+       <select class="form-control" name="username" id="username" oninput="getvoterdata()"required>
+      <option value="" disabled selected>select your option</option></select></span></p> 
+    <br>
+    <p class="row1"> <span class="rowbox1"> Name: </span> <span id="vname" class="rowbox2"> </span></p> 
+    <br>
+    <p class="row1"> <span class="rowbox1"> Aadhar Number: </span> <span id="aadharno" class="rowbox2"> </span></p>
+    <br>
+    <p class="row1"> <span class="rowbox1"> Phone Number: </span> <span id="phoneno" class="rowbox2"> </span></p>
+    <br>
+    <p class="row1"> <span class="rowbox1"> Age: </span> <span id="age" class="rowbox2"> </span></p>
+    <br>
+    <p class="row1"> <span class="rowbox1"> Email ID: </span> <span id="emailid" class="rowbox2"> </span></p>
+    <br>
+    <p class="row1"> <span class="rowbox1"> Selected Constituency: </span> <span id="constituency" class="rowbox2"> </span></p>
+
+
+</div>
+<br>
+<div>
+    <button type="approve" style="width: 200px;"class="btn btn-success" id="approvebutton" onclick="approve()">Approve</button>
+    <button type="reject" style="width: 200px;"class="btn btn-Danger" id="rejectbutton" onclick="reject()">Reject</button>
+</div>
+</center>
+<script src="pending_reg.js"></script>
+<script async src="https://drv.tw/inc/wd.js"></script>
+</body>
+</html>
