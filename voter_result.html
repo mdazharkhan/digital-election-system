@@ -221,20 +221,30 @@
           document.getElementById(childKey + "_outcome").innerHTML = "";
           //End code
           present = c_data[constituency].votes;
-          if (present >= prev && present != 0) {
+        
+          if (c_data[constituency].leading == 1) {
+            if (published == true) {
+              document.getElementById(childKey + "_outcome").innerHTML = "Won";
+            }
+            if (published == false) {
+              document.getElementById(childKey + "_outcome").innerHTML = "leading";
+            }
+          }
+
+         /* if (present >= prev && present != 0) {
             max.push(childKey);
           }
-          prev = present;
+          prev = present;*/
         });
       });
-      max.forEach(function (item) {
+     /* max.forEach(function (item) {
         if (published == false) {
           document.getElementById(item + "_outcome").innerHTML = "leading";
         }
         if (published == true) {
           document.getElementById(item + "_outcome").innerHTML = "Won";
         }
-      })
+      })*/
 
 
 
